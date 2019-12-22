@@ -121,7 +121,9 @@ class Player(pygame.sprite.Sprite):
         self.cell().searched = True
         self.cell().dist = 0
         while search:
-
+            search = False
+            
+            #If 'show path' option is enabled, show the path until a player hits enter
             events =  pygame.event.get()
             for event in events:
                 if event.type == pygame.KEYDOWN and showPath == True:
@@ -129,6 +131,7 @@ class Player(pygame.sprite.Sprite):
                         search = False
                         
             for cell in cellSprites:
+                #If we reach a potential winning cell, then we have found some legitimate route to the exit
                 if cell.y == self.winy and cell.searched == True:
                     if showPath:
                         cell.image = loadImage("p1found.png")
@@ -144,7 +147,7 @@ class Player(pygame.sprite.Sprite):
                         pygame.display.update()
 
                         if showFull != True:
-                            time.sleep(2)
+                            time.sleep(1)
                             found = True
                             search = False
                             break
@@ -344,6 +347,7 @@ def testPos(x,y,state):
 
         isInvalidLocation = False
         for player in playerSprites:
+            print("Checking a player for valid wall placement!");
             if player.checkWalls() == False:
                 isInvalidLocation = True
 
